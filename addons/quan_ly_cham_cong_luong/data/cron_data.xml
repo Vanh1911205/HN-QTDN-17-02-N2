@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Cron: Nhac nho Check-in (chay luc 8h45 sang hang ngay) -->
+    <record id="ir_cron_remind_check_in" model="ir.cron">
+        <field name="name">Cham cong: Nhac nho Check-in qua Telegram</field>
+        <field name="model_id" ref="quan_ly_cham_cong_luong.model_hr_cham_cong"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_remind_check_in()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Cron: Nhac nho Check-out (chay luc 17h30 chieu hang ngay) -->
+    <record id="ir_cron_remind_check_out" model="ir.cron">
+        <field name="name">Cham cong: Nhac nho Check-out qua Telegram</field>
+        <field name="model_id" ref="quan_ly_cham_cong_luong.model_hr_cham_cong"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_remind_check_out()</field>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Menu goc QLNS: Chi HR Quan ly moi xem duoc -->
         <menuitem
             id="menu_root"
             name="QLNS"
-            sequence="0"/>
+            sequence="0"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"/>
           
         <menuitem name="Quản lý nhân viên" 
             id="menu_nhan_vien" 
             parent="menu_root" 
             sequence="1"
             action="action_nhan_vien"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"
         />
 
         <menuitem name="Danh mục chung" 
             id="menu_danh_muc_chung" 
             parent="menu_root" 
-            sequence="1"
+            sequence="2"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"
         />
 
         <menuitem name="Danh mục đơn vị" 
@@ -24,30 +28,35 @@
             parent="menu_danh_muc_chung" 
             sequence="1"
             action="action_don_vi"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"
         />
         <menuitem name="Danh mục chức vụ" 
             id="menu_chuc_vu" 
             parent="menu_danh_muc_chung" 
             sequence="2"
             action="action_chuc_vu"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"
         />
         <menuitem name="Danh mục chứng chỉ, bằng cấp" 
             id="menu_chung_chi_bang_cap" 
             parent="menu_danh_muc_chung" 
             sequence="3"
             action="action_chung_chi_bang_cap"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"
         />
         <menuitem name="Lịch sử công tác" 
             id="menu_lich_su_cong_tac" 
             parent="menu_root" 
             sequence="4"
             action="action_lich_su_cong_tac"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"
         />
         <menuitem name="Danh sách chứng chỉ, bằng cấp" 
             id="menu_danh_sach_chung_chi_bang_cap" 
             parent="menu_root" 
-            sequence="4"
+            sequence="5"
             action="action_danh_sach_chung_chi_bang_cap"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"
         />
     </data>
 </odoo>

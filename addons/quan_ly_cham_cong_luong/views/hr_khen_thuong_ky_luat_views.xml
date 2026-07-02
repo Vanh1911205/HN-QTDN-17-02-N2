@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hr_khen_thuong_ky_luat_tree" model="ir.ui.view">
+        <field name="name">hr.khen.thuong.ky.luat.tree</field>
+        <field name="model">hr_khen_thuong_ky_luat</field>
+        <field name="arch" type="xml">
+            <tree string="Khen thưởng &amp; Kỷ luật">
+                <field name="ngay_ap_dung"/>
+                <field name="nhan_vien_id"/>
+                <field name="loai_quyet_dinh"/>
+                <field name="so_tien"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hr_khen_thuong_ky_luat_form" model="ir.ui.view">
+        <field name="name">hr.khen.thuong.ky.luat.form</field>
+        <field name="model">hr_khen_thuong_ky_luat</field>
+        <field name="arch" type="xml">
+            <form string="Khen thưởng &amp; Kỷ luật">
+                <sheet>
+                    <group>
+                        <field name="nhan_vien_id"/>
+                        <field name="loai_quyet_dinh"/>
+                    </group>
+                    <group>
+                        <field name="so_tien"/>
+                        <field name="ngay_ap_dung"/>
+                        <field name="ly_do"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_khen_thuong_ky_luat" model="ir.actions.act_window">
+        <field name="name">Biến động thu nhập (Thưởng/Phạt)</field>
+        <field name="res_model">hr_khen_thuong_ky_luat</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- ACTION: Nhan vien xem khen thuong/ky luat cua minh -->
+    <record id="action_khen_thuong_cua_toi" model="ir.actions.act_window">
+        <field name="name">Khen thưởng &amp; Kỷ luật của tôi</field>
+        <field name="res_model">hr_khen_thuong_ky_luat</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('nhan_vien_id.user_id', '=', uid)]</field>
+    </record>
+</odoo>

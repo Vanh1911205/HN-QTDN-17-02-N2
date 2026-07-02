@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TREE VIEW -->
+    <record id="view_hr_hop_dong_tree" model="ir.ui.view">
+        <field name="name">hr.hop.dong.tree</field>
+        <field name="model">hr_hop_dong</field>
+        <field name="arch" type="xml">
+            <tree string="Hợp đồng lao động AI">
+                <field name="name"/>
+                <field name="nhan_vien_id"/>
+                <field name="chuc_vu_id"/>
+                <field name="loai_hop_dong"/>
+                <field name="ngay_bat_dau"/>
+                <field name="ngay_ket_thuc"/>
+                <field name="luong_thoa_thuan"/>
+                <field name="trang_thai" widget="badge" decoration-success="trang_thai == 'confirmed'" decoration-info="trang_thai == 'draft'"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_hr_hop_dong_form" model="ir.ui.view">
+        <field name="name">hr.hop.dong.form</field>
+        <field name="model">hr_hop_dong</field>
+        <field name="arch" type="xml">
+            <form string="Hợp đồng lao động AI">
+                <header>
+                    <button name="action_generate_contract_ai"
+                            string="✨ Soạn Hợp Đồng Bằng AI"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"
+                            icon="fa-magic"/>
+                    <button name="action_confirm_contract"
+                            string="✍️ Ký Kết Hợp Đồng"
+                            type="object"
+                            class="btn-success"
+                            attrs="{'invisible': [('trang_thai', '!=', 'draft')]}"
+                            confirm="Bạn có chắc chắn muốn xác nhận ký kết hợp đồng này? Thông tin hợp đồng sẽ được cập nhật đồng bộ sang hồ sơ nhân sự."
+                            icon="fa-check"/>
+                    <field name="trang_thai" widget="statusbar" statusbar_visible="draft,confirmed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Thông tin nhân sự">
+                            <field name="nhan_vien_id" attrs="{'readonly': [('trang_thai', '!=', 'draft')]}"/>
+                            <field name="gioi_tinh"/>
+                            <field name="chuc_vu_id"/>
+                            <field name="email"/>
+                            <field name="so_dien_thoai"/>
+                        </group>
+                        <group string="Thông tin hợp đồng">
+                            <field name="loai_hop_dong" attrs="{'readonly': [('trang_thai', '!=', 'draft')]}"/>
+                            <field name="ngay_bat_dau" attrs="{'readonly': [('trang_thai', '!=', 'draft')]}"/>
+                            <field name="ngay_ket_thuc" attrs="{'readonly': [('trang_thai', '!=', 'draft')]}"/>
+                            <field name="luong_thoa_thuan" attrs="{'readonly': [('trang_thai', '!=', 'draft')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Nội dung hợp đồng">
+                            <field name="noi_dung_hop_dong" widget="html" attrs="{'readonly': [('trang_thai', '!=', 'draft')]}" options="{'style-inline': true}"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION: Nhan vien xem hop dong cua minh -->
+    <record id="action_hop_dong_cua_toi" model="ir.actions.act_window">
+        <field name="name">Hợp đồng của tôi</field>
+        <field name="res_model">hr_hop_dong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('nhan_vien_id.user_id', '=', uid)]</field>
+    </record>
+
+    <!-- ACTION: HR Manager - tat ca hop dong -->
+    <record id="action_open_hop_dong_ai" model="ir.actions.act_window">
+        <field name="name">Hợp đồng lao động AI</field>
+        <field name="res_model">hr_hop_dong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Chưa có hợp đồng nào được tạo.
+            </p>
+            <p>
+                Chọn nhân viên, nhập thông tin lương thưởng và bấm nút "Soạn hợp đồng bằng AI" để tự động tạo hợp đồng lao động chuẩn.
+            </p>
+        </field>
+    </record>
+</odoo>

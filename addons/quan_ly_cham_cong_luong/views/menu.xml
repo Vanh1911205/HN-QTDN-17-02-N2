@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Action: Ho so ca nhan cua nhan vien -->
+        <record id="action_ho_so_cua_toi" model="ir.actions.act_window">
+            <field name="name">Hồ sơ của tôi</field>
+            <field name="res_model">nhan_vien</field>
+            <field name="view_mode">form,tree</field>
+            <field name="domain">[('user_id', '=', uid)]</field>
+        </record>
+
+        <!-- URL Action: Cham cong AI -->
+        <record id="action_open_cham_cong_ai" model="ir.actions.act_url">
+            <field name="name">🤖 Chấm công AI</field>
+            <field name="url">/cham_cong_ai</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- URL Action: HR Chatbot AI (trong Odoo) -->
+        <record id="action_open_hr_chatbot" model="ir.actions.act_url">
+            <field name="name">💬 HR Chatbot AI</field>
+            <field name="url">/hr_chatbot</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- ===== MENU GOC: Ca admin va nhan vien deu thay ===== -->
+        <menuitem
+            id="menu_root_chamcong"
+            name="Chấm công &amp; Lương"
+            sequence="10"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien,quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+        <!-- CHI NHAN VIEN: admin KHONG thay -->
+        <menuitem name="Chấm công của tôi"
+            id="menu_cham_cong_cua_toi"
+            parent="menu_root_chamcong"
+            sequence="1"
+            action="action_self_service_cham_cong"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien"/>
+
+        <menuitem name="🤖 Chấm công AI"
+            id="menu_cham_cong_ai"
+            parent="menu_root_chamcong"
+            sequence="2"
+            action="action_open_cham_cong_ai"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien"/>
+
+        <!-- CA HAI deu thay -->
+        <menuitem name="📒 Sổ tay nhân viên"
+            id="menu_so_tay_nhan_vien"
+            parent="menu_root_chamcong"
+            sequence="3"
+            action="action_so_tay_nhan_vien"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien,quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+        <!-- CHI NHAN VIEN: admin KHONG thay -->
+        <menuitem name="Phiếu lương của tôi"
+            id="menu_phieu_luong_cua_toi"
+            parent="menu_root_chamcong"
+            sequence="4"
+            action="action_hr_phieu_luong_nhan_vien"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien"/>
+
+        <menuitem name="📋 Hợp đồng của tôi"
+            id="menu_hop_dong_cua_toi"
+            parent="menu_root_chamcong"
+            sequence="5"
+            action="action_hop_dong_cua_toi"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien"/>
+
+        <menuitem name="🏆 Khen thưởng &amp; Kỷ luật của tôi"
+            id="menu_khen_thuong_cua_toi"
+            parent="menu_root_chamcong"
+            sequence="6"
+            action="action_khen_thuong_cua_toi"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien"/>
+
+        <menuitem name="👤 Hồ sơ của tôi"
+            id="menu_ho_so_cua_toi"
+            parent="menu_root_chamcong"
+            sequence="7"
+            action="action_ho_so_cua_toi"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien"/>
+
+        <!-- ===== CHI ADMIN ===== -->
+        <menuitem name="📊 Quản lý tổng"
+            id="menu_quan_ly_tong"
+            parent="menu_root_chamcong"
+            sequence="5"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+        <menuitem name="Bảng chấm công"
+            id="menu_bang_cham_cong"
+            parent="menu_quan_ly_tong"
+            sequence="1"
+            action="action_hr_cham_cong"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+        <menuitem name="Cấu hình lương"
+            id="menu_luong_co_ban"
+            parent="menu_quan_ly_tong"
+            sequence="2"
+            action="action_hr_luong_co_ban"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+        <menuitem name="Khen thưởng / Kỷ luật"
+            id="menu_khen_thuong_ky_luat"
+            parent="menu_quan_ly_tong"
+            sequence="3"
+            action="action_hr_khen_thuong_ky_luat"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+        <menuitem name="Tất cả phiếu lương"
+            id="menu_tat_ca_phieu_luong"
+            parent="menu_quan_ly_tong"
+            sequence="4"
+            action="action_hr_phieu_luong"
+            groups="quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+        <!-- ===== HR CHATBOT: Ca hai deu thay ===== -->
+        <menuitem name="💬 HR Chatbot"
+            id="menu_hr_chatbot"
+            sequence="20"
+            action="action_open_hr_chatbot"
+            groups="quan_ly_cham_cong_luong.group_nhan_vien,quan_ly_cham_cong_luong.group_hr_quan_ly"/>
+
+    </data>
+</odoo>

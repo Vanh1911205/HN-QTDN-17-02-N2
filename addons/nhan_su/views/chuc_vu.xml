@@ -11,6 +11,8 @@
                         <group col="4" string="Thông tin chung">
                             <field name="ma_chuc_vu"/>
                             <field name="ten_chuc_vu"/>
+                            <field name="phu_cap_trach_nhiem"/>
+                            <field name="mo_ta"/>
                         </group>
                     </sheet>
                 </form>
@@ -24,6 +26,7 @@
                 <tree>
                     <field name="ma_chuc_vu"/>
                     <field name="ten_chuc_vu"/>
+                    <field name="phu_cap_trach_nhiem"/>
                 </tree>
             </field>
         </record>

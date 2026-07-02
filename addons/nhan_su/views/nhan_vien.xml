@@ -1,78 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record id="view_nhan_vien_form" model="ir.ui.view">
-            <field name="name">nhan_vien</field>
-            <field name="model">nhan_vien</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <div class="oe_read_only" style="font-size:25px">Nhân viên</div>
-                        <group col="4" string="Thông tin chung">
+    <!-- ==========================================
+         VIEW: nhan_vien - Form (Nang cap day du)
+    =========================================== -->
+    <record id="view_nhan_vien_form" model="ir.ui.view">
+        <field name="name">nhan_vien.form</field>
+        <field name="model">nhan_vien</field>
+        <field name="arch" type="xml">
+            <form string="Hồ sơ nhân viên">
+                <header>
+                    <button name="action_tao_tai_khoan"
+                            string="Tạo tài khoản đăng nhập"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('user_id', '!=', False)]}"
+                            icon="fa-user-plus"/>
+                    <button name="action_lay_chat_id_telegram"
+                            string="🔄 Lấy Chat ID từ Telegram"
+                            type="object"
+                            class="btn-info"
+                            icon="fa-telegram"
+                            help="Nhân viên gửi mã định danh cho bot @odoovananhbot rồi bấm nút này"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object"
+                                name="action_tao_tai_khoan" icon="fa-user"
+                                attrs="{'invisible': [('user_id', '=', False)]}">
+                            <field name="user_id" widget="statinfo" string="Tài khoản"/>
+                        </button>
+                        <!-- Nut dang ky khuon mat -->
+                        <button class="oe_stat_button" type="object"
+                                name="action_mo_dang_ky_khuon_mat"
+                                icon="fa-camera"
+                                attrs="{'invisible': [('id', '=', False)]}">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text" attrs="{'invisible': [('da_dang_ky_khuon_mat', '=', True)]}">Chưa đăng ký</span>
+                                <span class="o_stat_text" attrs="{'invisible': [('da_dang_ky_khuon_mat', '=', False)]}">✅ Đã đăng ký</span>
+                                <span class="o_stat_value">Khuôn mặt</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <field name="anh" widget="image" class="oe_avatar" options="{'preview_image': 'anh'}"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ho_va_ten" readonly="1"/>
+                        </h1>
+                        <h3>
+                            <field name="chuc_vu_hien_tai_id" readonly="1" placeholder="Chưa có chức vụ"/>
+                        </h3>
+                    </div>
+
+                    <group>
+                        <group string="Thông tin cá nhân">
                             <field name="ho_ten_dem"/>
                             <field name="ten"/>
-                            <field name="ho_va_ten"/>
                             <field name="ma_dinh_danh"/>
+                            <field name="gioi_tinh" widget="radio" options="{'horizontal': true}"/>
                             <field name="ngay_sinh"/>
-                            <field name="tuoi"/>
-                            <field name="so_nguoi_bang_tuoi"/>
+                            <field name="tuoi" readonly="1"/>
                             <field name="que_quan"/>
-                            <field name="email"/>
-                            <field name="anh" widget="image"/>
                         </group>
-                        <notebook>
-                            <page string="Danh sách lịch sử công tác">
-                                <field name="lich_su_cong_tac_ids"/>
-                            </page>
-                            <page string="Danh sách chứng chỉ bằng cấp">
-                                <field name="danh_sach_chung_chi_bang_cap_ids"/>
-                            </page>
-                        </notebook>
-                    </sheet>
-                    
-                </form>
-            </field>
-        </record>
+                        <group string="Liên hệ &amp; Tài khoản">
+                            <field name="email"/>
+                            <field name="so_dien_thoai"/>
+                            <field name="telegram_chat_id" placeholder="Dùng nút '🔄 Lấy Chat ID' ở trên cùng"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="chuc_vu_hien_tai_id" readonly="1"/>
+                            <field name="phu_cap_trach_nhiem_tu_chuc_vu" readonly="1" widget="monetary"
+                                   options="{'currency_field': False}"/>
+                            <field name="so_nguoi_bang_tuoi" readonly="1"/>
+                        </group>
+                    </group>
 
-        <record id="view_nhan_vien_tree" model="ir.ui.view">
-            <field name="name">nhan_vien</field>
-            <field name="model">nhan_vien</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="ma_dinh_danh"/>
-                    <field name="ho_ten_dem"/>
-                    <field name="ten"/>
-                    <field name="ho_va_ten"/>
-                    <field name="ngay_sinh"/>
-                    <field name="tuoi"/>
-                    <field name="so_nguoi_bang_tuoi"/>
-                    <field name="que_quan"/>
-                    <field name="email"/>
-                </tree>
-            </field>
-        </record>
+                    <!-- Hop dong -->
+                    <group string="Thông tin hợp đồng">
+                        <group>
+                            <field name="loai_hop_dong"/>
+                            <field name="ngay_ky_hop_dong_cty"/>
+                        </group>
+                        <group>
+                            <field name="ngay_ky_hop_dong_nv"/>
+                        </group>
+                    </group>
 
-        <record model="ir.ui.view" id="nhan_vien_search">
-            <field name="model">nhan_vien</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="ma_dinh_danh"/>
-                    <field name="ho_va_ten"/>
-                    <field name="ngay_sinh"/>
-                    <field name="tuoi"/>
-                    <field name="que_quan"/>
-                    <field name="email"/>
-                </search>
-            </field>
-        </record>
+                    <!-- Khuon mat AI -->
+                    <group string="Đăng ký khuôn mặt AI" attrs="{'invisible': [('da_dang_ky_khuon_mat', '=', False)]}">
+                        <div colspan="2">
+                            <button name="action_xoa_khuon_mat" type="object"
+                                    string="🗑️ Xóa dữ liệu khuôn mặt"
+                                    class="btn btn-danger btn-sm"
+                                    confirm="Bạn có chắc muốn xóa dữ liệu khuôn mặt không?"/>
+                        </div>
+                        <field name="face_image_front" widget="image" string="Mặt thẳng"
+                               options="{'size': [128, 128]}"/>
+                        <field name="face_image_left" widget="image" string="Nghiêng trái"
+                               options="{'size': [128, 128]}"/>
+                        <field name="face_image_right" widget="image" string="Nghiêng phải"
+                               options="{'size': [128, 128]}"/>
+                        <field name="da_dang_ky_khuon_mat" invisible="1"/>
+                    </group>
+                    <group attrs="{'invisible': [('da_dang_ky_khuon_mat', '=', True)]}">
+                        <div colspan="2" class="alert alert-warning" role="alert"
+                             attrs="{'invisible': [('id', '=', False)]}">
+                            <strong>⚠️ Nhân viên chưa đăng ký khuôn mặt.</strong>
+                            Nhấn nút <b>Khuôn mặt</b> ở trên để mở giao diện đăng ký 3 góc.
+                        </div>
+                        <field name="da_dang_ky_khuon_mat" invisible="1"/>
+                    </group>
 
-        <record id="action_nhan_vien" model="ir.actions.act_window">
-            <field name="name">Nhân viên</field>
-            <field name="res_model">nhan_vien</field>
-            <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref = "nhan_vien_search"/>
-        </record>
-    </data>
+                    <notebook>
+                        <page string="Lịch sử công tác">
+                            <field name="lich_su_cong_tac_ids">
+                                <tree editable="bottom">
+                                    <field name="chuc_vu_id"/>
+                                    <field name="loai_chuc_vu"/>
+                                    <field name="don_vi_id"/>
+                                    <field name="ngay_bat_dau"/>
+                                    <field name="ngay_ket_thuc"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Chứng chỉ, bằng cấp">
+                            <field name="danh_sach_chung_chi_bang_cap_ids">
+                                <tree editable="bottom">
+                                    <field name="chung_chi_bang_cap_id"/>
+                                    <field name="ngay_cap"/>
+                                    <field name="noi_cap"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- LIST VIEW -->
+    <record id="view_nhan_vien_list" model="ir.ui.view">
+        <field name="name">nhan_vien.list</field>
+        <field name="model">nhan_vien</field>
+        <field name="arch" type="xml">
+            <tree string="Danh sách nhân viên">
+                <field name="anh" widget="image" options="{'size': [32, 32]}"/>
+                <field name="ma_dinh_danh"/>
+                <field name="ho_va_ten"/>
+                <field name="gioi_tinh"/>
+                <field name="chuc_vu_hien_tai_id"/>
+                <field name="email"/>
+                <field name="so_dien_thoai"/>
+                <field name="ngay_ky_hop_dong_cty"/>
+                <field name="loai_hop_dong"/>
+                <field name="da_dang_ky_khuon_mat" widget="boolean_toggle"/>
+                <field name="telegram_chat_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <record id="view_nhan_vien_search" model="ir.ui.view">
+        <field name="name">nhan_vien.search</field>
+        <field name="model">nhan_vien</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="ho_va_ten"/>
+                <field name="ma_dinh_danh"/>
+                <field name="email"/>
+                <filter string="Nam" name="filter_nam" domain="[('gioi_tinh','=','nam')]"/>
+                <filter string="Nữ" name="filter_nu" domain="[('gioi_tinh','=','nu')]"/>
+                <filter string="Đã đăng ký khuôn mặt" name="filter_face"
+                        domain="[('face_image_front','!=',False)]"/>
+                <filter string="Chưa đăng ký khuôn mặt" name="filter_no_face"
+                        domain="[('face_image_front','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Giới tính" name="group_gioi_tinh" context="{'group_by': 'gioi_tinh'}"/>
+                    <filter string="Chức vụ" name="group_chuc_vu" context="{'group_by': 'chuc_vu_hien_tai_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_nhan_vien" model="ir.actions.act_window">
+        <field name="name">Quản lý nhân viên</field>
+        <field name="res_model">nhan_vien</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_nhan_vien_search"/>
+    </record>
 </odoo>
-        
-    

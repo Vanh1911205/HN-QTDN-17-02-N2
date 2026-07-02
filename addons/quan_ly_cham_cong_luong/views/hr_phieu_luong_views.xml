@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- TREE VIEW -->
+    <record id="view_hr_phieu_luong_tree" model="ir.ui.view">
+        <field name="name">hr.phieu.luong.tree</field>
+        <field name="model">hr_phieu_luong</field>
+        <field name="arch" type="xml">
+            <tree string="Phiếu lương tháng">
+                <field name="nhan_vien_id"/>
+                <field name="thang"/>
+                <field name="nam"/>
+                <field name="tong_gio_cong"/>
+                <field name="so_ngay_cong"/>
+                <field name="luong_theo_gio"/>
+                <field name="tong_phat_cham_cong"/>
+                <field name="tong_bh_nhan_vien"/>
+                <field name="luong_thuc_linh" sum="Tổng quỹ lương thực lĩnh"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_hr_phieu_luong_form" model="ir.ui.view">
+        <field name="name">hr.phieu.luong.form</field>
+        <field name="model">hr_phieu_luong</field>
+        <field name="arch" type="xml">
+            <form string="Phiếu lương tháng">
+                <header>
+                    <button name="action_recompute_salary" string="Tính lại lương" type="object" class="oe_highlight"/>
+                    <button name="action_send_salary_telegram" string="Gửi Telegram" type="object" class="btn-success" icon="fa-paper-plane"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="nhan_vien_id" placeholder="Chọn nhân viên..."/>
+                        </h1>
+                    </div>
+                    <group col="4">
+                        <field name="thang"/>
+                        <field name="nam"/>
+                    </group>
+                    <notebook>
+                        <page string="Chi tiết Lương &amp; Thu nhập">
+                            <group>
+                                <group string="Lương thời gian">
+                                    <field name="luong_co_ban" readonly="1"/>
+                                    <field name="tong_gio_cong" readonly="1"/>
+                                    <field name="so_ngay_cong" readonly="1"/>
+                                    <field name="luong_theo_gio" readonly="1"/>
+                                </group>
+                                <group string="Tăng ca (OT)">
+                                    <field name="tong_gio_ot" readonly="1"/>
+                                    <field name="luong_ot" readonly="1"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Khoản phụ cấp cố định">
+                                    <field name="phu_cap_an_trua" readonly="1"/>
+                                    <field name="phu_cap_trach_nhiem" readonly="1"/>
+                                </group>
+                                <group string="Thưởng &amp; Phạt">
+                                    <field name="tong_thuong" readonly="1"/>
+                                    <field name="tong_phat" readonly="1" string="Phạt kỷ luật"/>
+                                    <field name="tong_phat_cham_cong" readonly="1" string="Phạt đi muộn / về sớm"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Trích đóng Bảo hiểm">
+                            <group col="4">
+                                <field name="luong_dong_bh" readonly="1"/>
+                                <newline/>
+                                <field name="tong_bh_nhan_vien" readonly="1" string="Tổng BH trừ vào lương"/>
+                                <field name="tong_bh_cong_ty" readonly="1" string="Tổng BH công ty đóng"/>
+                            </group>
+                            <group>
+                                <group string="Nhân viên đóng (Khấu trừ lương - 10.5%)">
+                                    <field name="bhxh_nhan_vien" readonly="1"/>
+                                    <field name="bhyt_nhan_vien" readonly="1"/>
+                                    <field name="bhtn_nhan_vien" readonly="1"/>
+                                </group>
+                                <group string="Doanh nghiệp đóng (Chi phí công ty - 21.5%)">
+                                    <field name="bhxh_cong_ty" readonly="1"/>
+                                    <field name="bhyt_cong_ty" readonly="1"/>
+                                    <field name="bhtn_cong_ty" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="salary_total">
+                        <field name="luong_thuc_linh" class="oe_subtotal_footer_separator" style="font-size: 1.5em; font-weight: bold;" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- GRAPH VIEW -->
+    <record id="view_hr_phieu_luong_graph" model="ir.ui.view">
+        <field name="name">hr.phieu.luong.graph</field>
+        <field name="model">hr_phieu_luong</field>
+        <field name="arch" type="xml">
+            <graph string="Tổng hợp công và lương theo tháng" type="bar">
+                <field name="thang" type="row"/>
+                <field name="tong_gio_cong" type="measure"/>
+                <field name="luong_thuc_linh" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- PIVOT VIEW -->
+    <record id="view_hr_phieu_luong_pivot" model="ir.ui.view">
+        <field name="name">hr.phieu.luong.pivot</field>
+        <field name="model">hr_phieu_luong</field>
+        <field name="arch" type="xml">
+            <pivot string="Phân tích công và lương">
+                <field name="thang" type="row"/>
+                <field name="tong_gio_cong" type="measure"/>
+                <field name="luong_thuc_linh" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ACTION: HR Manager (all) -->
+    <record id="action_hr_phieu_luong" model="ir.actions.act_window">
+        <field name="name">Tính phiếu lương tháng</field>
+        <field name="res_model">hr_phieu_luong</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action: Nhan vien xem phieu luong cua minh -->
+    <record id="action_hr_phieu_luong_nhan_vien" model="ir.actions.act_window">
+        <field name="name">Phiếu lương của tôi</field>
+        <field name="res_model">hr_phieu_luong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('nhan_vien_id.user_id', '=', uid)]</field>
+    </record>
+
+</odoo>

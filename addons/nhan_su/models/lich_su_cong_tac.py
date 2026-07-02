@@ -9,11 +9,13 @@ class LichSuCongTac(models.Model):
     don_vi_id = fields.Many2one("don_vi", string="Đơn vị")
     loai_chuc_vu = fields.Selection(
         [
-            ("Chính", "Chính"), 
+            ("Chính", "Chính"),
             ("Kiêm nhiệm", "Kiêm nhiệm")
-        ], 
+        ],
         string="Loại chức vụ", default="Chính"
     )
     nhan_vien_id = fields.Many2one("nhan_vien", string="Nhân viên")
+    ngay_bat_dau = fields.Date("Ngày bắt đầu")
+    ngay_ket_thuc = fields.Date("Ngày kết thúc")
     
     

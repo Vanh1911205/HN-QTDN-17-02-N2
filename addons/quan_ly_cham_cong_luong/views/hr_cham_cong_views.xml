@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==========================================
+         VIEW: hr_cham_cong - Self service
+    =========================================== -->
+
+    <!-- TREE VIEW (HR Manager - full) -->
+    <record id="view_hr_cham_cong_tree" model="ir.ui.view">
+        <field name="name">hr.cham.cong.tree</field>
+        <field name="model">hr_cham_cong</field>
+        <field name="arch" type="xml">
+            <tree string="Cham cong hang ngay">
+                <field name="ngay_cham_cong"/>
+                <field name="nhan_vien_id"/>
+                <field name="trang_thai"/>
+                <field name="gio_vao"/>
+                <field name="gio_ra"/>
+                <field name="so_gio_cong"/>
+                <field name="so_phut_muon"/>
+                <field name="so_phut_ve_som"/>
+                <field name="tien_phat" sum="Tong tien phat"/>
+                <field name="so_gio_tang_ca"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- TREE VIEW (Nhan vien - chi xem cua minh) -->
+    <record id="view_hr_cham_cong_tree_nv" model="ir.ui.view">
+        <field name="name">hr.cham.cong.tree.nhanvien</field>
+        <field name="model">hr_cham_cong</field>
+        <field name="arch" type="xml">
+            <tree string="Cham cong cua toi" create="false" delete="false">
+                <field name="ngay_cham_cong"/>
+                <field name="trang_thai"/>
+                <field name="gio_vao"/>
+                <field name="gio_ra"/>
+                <field name="so_gio_cong"/>
+                <field name="so_phut_muon"/>
+                <field name="so_phut_ve_som"/>
+                <field name="tien_phat"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORM VIEW (full) -->
+    <record id="view_hr_cham_cong_form" model="ir.ui.view">
+        <field name="name">hr.cham.cong.form</field>
+        <field name="model">hr_cham_cong</field>
+        <field name="arch" type="xml">
+            <form string="Chi tiet cham cong">
+                <sheet>
+                    <group>
+                        <group string="Thong tin chung">
+                            <field name="nhan_vien_id"/>
+                            <field name="ngay_cham_cong"/>
+                            <field name="trang_thai"/>
+                        </group>
+                        <group string="Thoi gian check-in/out" attrs="{'invisible': [('trang_thai', '!=', 'di_lam')]}">
+                            <field name="gio_vao"/>
+                            <field name="gio_ra"/>
+                            <field name="so_gio_cong" readonly="1"/>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('trang_thai', '!=', 'di_lam')]}">
+                        <group string="Chi tiet di muon / ve som">
+                            <field name="so_phut_muon" readonly="1"/>
+                            <field name="so_phut_ve_som" readonly="1"/>
+                            <field name="tien_phat" readonly="1"/>
+                        </group>
+                        <group string="Tang ca &amp; Kiem tra">
+                            <field name="so_gio_tang_ca"/>
+                            <field name="nguoi_xac_nhan"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ==========================================
+         VIEW: Self-Service Dashboard cho Nhan vien
+    =========================================== -->
+    <record id="view_self_service_cham_cong" model="ir.ui.view">
+        <field name="name">hr.cham.cong.self.service</field>
+        <field name="model">hr_cham_cong</field>
+        <field name="arch" type="xml">
+            <form string="Cham cong cua toi" create="false" edit="false">
+                <header>
+                    <button name="action_self_check_in"
+                            string="CHECK-IN"
+                            type="object"
+                            class="oe_highlight btn-lg"
+                            icon="fa-sign-in"
+                            confirm="Xac nhan Check-in ngay bay gio?"/>
+                    <button name="action_self_check_out"
+                            string="CHECK-OUT"
+                            type="object"
+                            class="btn-secondary btn-lg"
+                            icon="fa-sign-out"
+                            confirm="Xac nhan Check-out ngay bay gio?"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Ngay cham cong">
+                            <field name="ngay_cham_cong" readonly="1"/>
+                            <field name="trang_thai" readonly="1"/>
+                        </group>
+                        <group string="Gio vao / ra hom nay">
+                            <field name="gio_vao" readonly="1"/>
+                            <field name="gio_ra" readonly="1"/>
+                            <field name="so_gio_cong" readonly="1"/>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('trang_thai', '!=', 'di_lam')]}">
+                        <group string="Ket qua cham cong">
+                            <field name="so_phut_muon" readonly="1"/>
+                            <field name="so_phut_ve_som" readonly="1"/>
+                            <field name="tien_phat" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- CALENDAR VIEW (Nhan vien - chi xem cua minh) -->
+    <record id="view_hr_cham_cong_calendar" model="ir.ui.view">
+        <field name="name">hr.cham.cong.calendar</field>
+        <field name="model">hr_cham_cong</field>
+        <field name="arch" type="xml">
+            <calendar string="Lịch chấm công" date_start="ngay_cham_cong"
+                      color="trang_thai" mode="month" quick_add="false">
+                <field name="nhan_vien_id"/>
+                <field name="so_gio_cong"/>
+                <field name="trang_thai"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- GRAPH VIEW (tong hop gio cong theo thang) -->
+    <record id="view_hr_cham_cong_graph" model="ir.ui.view">
+        <field name="name">hr.cham.cong.graph</field>
+        <field name="model">hr_cham_cong</field>
+        <field name="arch" type="xml">
+            <graph string="Tổng hợp giờ công theo tháng" type="bar">
+                <field name="ngay_cham_cong" interval="month" type="row"/>
+                <field name="so_gio_cong" type="measure"/>
+                <field name="so_gio_tang_ca" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW (voi group-by thang) -->
+    <record id="view_hr_cham_cong_search" model="ir.ui.view">
+        <field name="name">hr.cham.cong.search</field>
+        <field name="model">hr_cham_cong</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm chấm công">
+                <field name="nhan_vien_id"/>
+                <field name="ngay_cham_cong"/>
+                <filter string="Đi làm" name="di_lam" domain="[('trang_thai','=','di_lam')]"/>
+                <filter string="Nghỉ có phép" name="nghi_phep" domain="[('trang_thai','=','nghi_co_phep')]"/>
+                <filter string="Nghỉ không phép" name="nghi_kp" domain="[('trang_thai','=','nghi_khong_phep')]"/>
+                <group expand="1" string="Nhóm theo">
+                    <filter string="Tháng" name="group_by_thang" context="{'group_by': 'ngay_cham_cong:month'}"/>
+                    <filter string="Nhân viên" name="group_by_nv" context="{'group_by': 'nhan_vien_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION: Self-service (hom nay cua nhan vien) -->
+    <record id="action_self_service_cham_cong" model="ir.actions.act_window">
+        <field name="name">Cham cong cua toi</field>
+        <field name="res_model">hr_cham_cong</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hr_cham_cong_tree_nv"/>
+        <field name="domain">[('nhan_vien_id.user_id', '=', uid)]</field>
+        <field name="context">{'default_trang_thai': 'di_lam'}</field>
+    </record>
+
+    <!-- ACTION: So tay cham cong (bieu do gio cong theo thang, chi xem cua minh) -->
+    <record id="action_so_tay_nhan_vien" model="ir.actions.act_window">
+        <field name="name">Sổ tay nhân viên</field>
+        <field name="res_model">hr_cham_cong</field>
+        <field name="view_mode">graph,calendar,tree</field>
+        <field name="domain">[('nhan_vien_id.user_id', '=', uid)]</field>
+        <field name="search_view_id" ref="view_hr_cham_cong_search"/>
+        <field name="context">{'search_default_group_by_thang': 1}</field>
+    </record>
+
+    <!-- ACTION: HR Manager (toan quyen) -->
+    <record id="action_hr_cham_cong" model="ir.actions.act_window">
+        <field name="name">Du lieu Cham cong</field>
+        <field name="res_model">hr_cham_cong</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="search_view_id" ref="view_hr_cham_cong_search"/>
+        <field name="context">{}</field>
+    </record>
+</odoo>

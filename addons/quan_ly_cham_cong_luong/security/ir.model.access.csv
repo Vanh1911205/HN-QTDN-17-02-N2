@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_luong_co_ban_manager,hr.luong.co.ban.manager,model_hr_luong_co_ban,quan_ly_cham_cong_luong.group_hr_quan_ly,1,1,1,1
+access_hr_luong_co_ban_nv,hr.luong.co.ban.nv,model_hr_luong_co_ban,quan_ly_cham_cong_luong.group_nhan_vien,1,0,0,0
+access_hr_cham_cong_manager,hr.cham.cong.manager,model_hr_cham_cong,quan_ly_cham_cong_luong.group_hr_quan_ly,1,1,1,1
+access_hr_cham_cong_nv,hr.cham.cong.nv,model_hr_cham_cong,quan_ly_cham_cong_luong.group_nhan_vien,1,1,1,0
+access_hr_khen_thuong_ky_luat_manager,hr.khen.thuong.ky.luat.manager,model_hr_khen_thuong_ky_luat,quan_ly_cham_cong_luong.group_hr_quan_ly,1,1,1,1
+access_hr_khen_thuong_ky_luat_nv,hr.khen.thuong.ky.luat.nv,model_hr_khen_thuong_ky_luat,quan_ly_cham_cong_luong.group_nhan_vien,1,0,0,0
+access_hr_phieu_luong_manager,hr.phieu.luong.manager,model_hr_phieu_luong,quan_ly_cham_cong_luong.group_hr_quan_ly,1,1,1,1
+access_hr_phieu_luong_nv,hr.phieu.luong.nv,model_hr_phieu_luong,quan_ly_cham_cong_luong.group_nhan_vien,1,0,0,0
+access_hr_hop_dong_manager,hr.hop.dong.manager,model_hr_hop_dong,quan_ly_cham_cong_luong.group_hr_quan_ly,1,1,1,1
+access_hr_hop_dong_nv,hr.hop.dong.nv,model_hr_hop_dong,quan_ly_cham_cong_luong.group_nhan_vien,1,0,0,0
